@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
+import { AdminRoleGuard } from './auth/AdminRoleGuard';
+import { AuthGuard } from './auth/AuthGuard';
+import { useAuthHook } from './auth/AuthHook';
 
 function App() {
+  const {
+    isAuthenticated,
+    role,
+    handleLogin,
+    handleLogout,
+    checkAuth,
+    authInProgress,
+  } = useAuthHook();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<div>Layout NavBar</div>}>
+          <Route path='/login' element={<div>Login</div>} />
+          <AuthGuard isAuthenticated={true}>
+            <>
+              <Route index element={<Navigate to='/invoices' replace />} />
+              <Route path='/invoices' element={<div>Invoices</div>} />
+              <Route path='/history' element={<div>History</div>} />
+              <Route path='/debitors' element={<div>Debitors</div>} />
+              <Route path='/statistics' element={<div>Statistics</div>} />
+              <AdminRoleGuard role={role}>
+                <Route path='/admin' element={<div>Admin</div>} />
+              </AdminRoleGuard>
+            </>
+          </AuthGuard>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
