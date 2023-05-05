@@ -3,6 +3,7 @@ import './App.css';
 import { AdminRoleGuard } from './auth/AdminRoleGuard';
 import { AuthGuard } from './auth/AuthGuard';
 import { useAuthHook } from './auth/AuthHook';
+import { Layout } from './layout/Layout';
 
 function App() {
   const {
@@ -17,20 +18,63 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<div>Layout NavBar</div>}>
-          <Route path='/login' element={<div>Login</div>} />
-          <AuthGuard isAuthenticated={true}>
-            <>
-              <Route index element={<Navigate to='/invoices' replace />} />
-              <Route path='/invoices' element={<div>Invoices</div>} />
-              <Route path='/history' element={<div>History</div>} />
-              <Route path='/debitors' element={<div>Debitors</div>} />
-              <Route path='/statistics' element={<div>Statistics</div>} />
-              <AdminRoleGuard role={role}>
-                <Route path='/admin' element={<div>Admin</div>} />
-              </AdminRoleGuard>
-            </>
-          </AuthGuard>
+        <Route
+          path='/'
+          element={
+            <Layout
+              handleLogout={handleLogout}
+              isAuthenticated={isAuthenticated}
+              role={'admin'}
+            />
+          }
+        >
+          <Route index element={<Navigate to='/invoices' replace />} />
+
+          <Route path='login' element={<div>Login</div>} />
+
+          <Route
+            path='invoices'
+            element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <div>Invoices</div>
+              </AuthGuard>
+            }
+          />
+          <Route
+            path='history'
+            element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <div>History</div>
+              </AuthGuard>
+            }
+          />
+          <Route
+            path='debitors'
+            element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <div>Debitors</div>
+              </AuthGuard>
+            }
+          />
+          <Route
+            path='statistics'
+            element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <div>Statistics</div>
+              </AuthGuard>
+            }
+          />
+
+          <Route
+            path='admin'
+            element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <AdminRoleGuard role={'admin'}>
+                  <div>Admin</div>
+                </AdminRoleGuard>
+              </AuthGuard>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>

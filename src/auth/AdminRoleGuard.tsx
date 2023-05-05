@@ -19,7 +19,7 @@ export function AdminRoleGuard({
           <Button onClick={() => navigate('/invoices', { replace: true })}>
             Cancel
           </Button>
-          <Button LinkComponent={Link}>Login</Button>
+          <Button href='/login' LinkComponent={Link}>Login</Button>
         </Stack>
       </Box>
     );
