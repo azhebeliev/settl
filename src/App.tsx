@@ -1,83 +1,68 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { AdminRoleGuard } from './auth/AdminRoleGuard';
+import { AuthProvider } from './auth/AuthContext';
 import { AuthGuard } from './auth/AuthGuard';
-import { useAuthHook } from './auth/AuthHook';
 import { Layout } from './layout/Layout';
+import { InvoicesView } from './views/InvoicesView';
 
 function App() {
-  const {
-    isAuthenticated,
-    role,
-    handleLogin,
-    handleLogout,
-    checkAuth,
-    authInProgress,
-  } = useAuthHook();
-
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path='/'
-          element={
-            <Layout
-              handleLogout={handleLogout}
-              isAuthenticated={isAuthenticated}
-              role={'admin'}
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Layout />}>
+            <Route index element={<Navigate to='/invoices' replace />} />
+
+            <Route path='login' element={<div>Login</div>} />
+
+            <Route
+              path='invoices'
+              element={
+                <AuthGuard>
+                  <InvoicesView />
+                </AuthGuard>
+              }
             />
-          }
-        >
-          <Route index element={<Navigate to='/invoices' replace />} />
+            <Route
+              path='history'
+              element={
+                <AuthGuard>
+                  <div>History</div>
+                </AuthGuard>
+              }
+            />
+            <Route
+              path='debitors'
+              element={
+                <AuthGuard>
+                  <div>Debitors</div>
+                </AuthGuard>
+              }
+            />
+            <Route
+              path='statistics'
+              element={
+                <AuthGuard>
+                  <div>Statistics</div>
+                </AuthGuard>
+              }
+            />
 
-          <Route path='login' element={<div>Login</div>} />
-
-          <Route
-            path='invoices'
-            element={
-              <AuthGuard isAuthenticated={isAuthenticated}>
-                <div>Invoices</div>
-              </AuthGuard>
-            }
-          />
-          <Route
-            path='history'
-            element={
-              <AuthGuard isAuthenticated={isAuthenticated}>
-                <div>History</div>
-              </AuthGuard>
-            }
-          />
-          <Route
-            path='debitors'
-            element={
-              <AuthGuard isAuthenticated={isAuthenticated}>
-                <div>Debitors</div>
-              </AuthGuard>
-            }
-          />
-          <Route
-            path='statistics'
-            element={
-              <AuthGuard isAuthenticated={isAuthenticated}>
-                <div>Statistics</div>
-              </AuthGuard>
-            }
-          />
-
-          <Route
-            path='admin'
-            element={
-              <AuthGuard isAuthenticated={isAuthenticated}>
-                <AdminRoleGuard role={'admin'}>
-                  <div>Admin</div>
-                </AdminRoleGuard>
-              </AuthGuard>
-            }
-          />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+            <Route
+              path='admin'
+              element={
+                <AuthGuard>
+                  <AdminRoleGuard>
+                    <div>Admin</div>
+                  </AdminRoleGuard>
+                </AuthGuard>
+              }
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

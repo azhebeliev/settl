@@ -16,11 +16,11 @@ import { NavLink } from 'react-router-dom';
 export function NavBar({
   isAuthenticated,
   isAdmin,
-  handleLogout,
+  logout,
 }: {
   isAuthenticated: boolean;
   isAdmin: boolean;
-  handleLogout: () => Promise<void>;
+  logout: () => void;
 }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -47,9 +47,10 @@ export function NavBar({
     <AppBar
       position='static'
       color='transparent'
-      sx={{ boxShadow: '0 5px 5px -7px ' }}
+      //sx={{ boxShadow: '0 5px 5px -8px ' }}
+      sx={{ borderBottom: '2px solid lightgrey', boxShadow: 'none' }}
     >
-      <Toolbar>
+      <Toolbar disableGutters>
         <Stack direction='row' spacing={2} sx={{ textTransform: 'none' }}>
           <Typography
             fontWeight={600}
@@ -61,35 +62,40 @@ export function NavBar({
             settl.
           </Typography>
 
-          <Button>
-            <NavLink to='/invoices' style={defineLinkStyle}>
-              Invoices
-            </NavLink>
-          </Button>
-          <Button>
-            <NavLink to='/history' style={defineLinkStyle}>
-              History
-            </NavLink>
-          </Button>
-          <Button>
-            <NavLink to='/debitors' style={defineLinkStyle}>
-              Debitors
-            </NavLink>
-          </Button>
-          <Button>
-            <NavLink to='/statistics' style={defineLinkStyle}>
-              Statistics
-            </NavLink>
-          </Button>
-          <Button>
-            <NavLink to='/admin' style={defineLinkStyle}>
-              Admin
-            </NavLink>
-          </Button>
+          {isAuthenticated && (
+            <>
+              {' '}
+              <Button>
+                <NavLink to='/invoices' style={defineLinkStyle}>
+                  Invoices
+                </NavLink>
+              </Button>
+              <Button>
+                <NavLink to='/history' style={defineLinkStyle}>
+                  History
+                </NavLink>
+              </Button>
+              <Button>
+                <NavLink to='/debitors' style={defineLinkStyle}>
+                  Debitors
+                </NavLink>
+              </Button>
+              <Button>
+                <NavLink to='/statistics' style={defineLinkStyle}>
+                  Statistics
+                </NavLink>
+              </Button>
+              <Button>
+                <NavLink to='/admin' style={defineLinkStyle}>
+                  Admin
+                </NavLink>
+              </Button>
+            </>
+          )}
         </Stack>
-        <Stack direction='row' spacing={2} sx={{ marginLeft: 'auto' }}>
+        <Stack direction='row' sx={{ marginLeft: 'auto' }}>
           <IconButton size='large' color='inherit'>
-            <AccountTreeIcon />
+            <AccountTreeIcon color='primary' />
           </IconButton>
           <IconButton
             id='auth-icon'
@@ -124,7 +130,7 @@ export function NavBar({
             >
               <MenuItem
                 onClick={() => {
-                  handleLogout();
+                  logout();
                   handleClose();
                 }}
               >

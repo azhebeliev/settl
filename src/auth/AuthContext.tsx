@@ -1,11 +1,20 @@
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
-export function useAuthHook() {
+const AuthContext = createContext({
+  isAuthenticated: false,
+  role: '',
+  login: (username: string, password: string) => {},
+  logout: () => {},
+  checkAuth: () => {},
+  authInProgress: true,
+});
+
+const AuthProvider = ({ children }: { children: JSX.Element }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authInProgress, setAuthInProgress] = useState(true);
   const [role, setRole] = useState('');
 
-  const handleLogin = async (username: string, password: string) => {
+  const login = async (username: string, password: string) => {
     const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
@@ -23,7 +32,7 @@ export function useAuthHook() {
     }
   };
 
-  const handleLogout = async () => {
+  const logout = async () => {
     // const response = await fetch('/api/logout', {
     //   method: 'POST',
     //   credentials: 'include',
@@ -42,9 +51,14 @@ export function useAuthHook() {
     //   credentials: 'include',
     // });
     const response = { ok: true };
-    if (response.ok) {
-      setIsAuthenticated(true);
-    }
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (response.ok) {
+          setIsAuthenticated(true);
+          resolve('');
+        }
+      }, 1000);
+    });
     setAuthInProgress(false);
   };
 
@@ -52,12 +66,20 @@ export function useAuthHook() {
     checkAuth();
   }, []);
 
-  return {
-    isAuthenticated,
-    role,
-    handleLogin,
-    handleLogout,
-    checkAuth,
-    authInProgress,
-  };
-}
+  return (
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        role,
+        login,
+        logout,
+        checkAuth,
+        authInProgress,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export { AuthProvider, AuthContext };

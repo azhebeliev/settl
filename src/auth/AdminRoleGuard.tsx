@@ -1,13 +1,10 @@
 import { Alert, AlertTitle, Box, Button, Stack } from '@mui/material';
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
 
-export function AdminRoleGuard({
-  role,
-  children,
-}: {
-  role: string;
-  children: JSX.Element;
-}) {
+export function AdminRoleGuard({ children }: { children: JSX.Element }) {
+  const { role } = useContext(AuthContext);
   const navigate = useNavigate();
   if (role !== 'admin') {
     return (
@@ -19,7 +16,9 @@ export function AdminRoleGuard({
           <Button onClick={() => navigate('/invoices', { replace: true })}>
             Cancel
           </Button>
-          <Button href='/login' LinkComponent={Link}>Login</Button>
+          <Button href='/login' LinkComponent={Link}>
+            Login
+          </Button>
         </Stack>
       </Box>
     );
