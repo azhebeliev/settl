@@ -48,7 +48,7 @@ export function InfoCard({
             </Typography>
 
             <Stack direction='row'>
-              <Typography variant='h5'>{value || percentValue}</Typography>
+              <Typography variant='h4'>{value || percentValue}</Typography>
               <Typography
                 mt={-1}
                 variant='subtitle2'
@@ -62,8 +62,6 @@ export function InfoCard({
           </div>
           {valueTendency && (
             <Typography
-              position={'relative'}
-              bottom={0}
               variant='body2'
               component='div'
               color='text.secondary'
