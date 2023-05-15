@@ -42,7 +42,7 @@ export const mockedCards: {
   },
 ];
 
-export type StatusMarker = 'red' | 'orange' | 'green'
+export type StatusMarker = 'red' | 'orange' | 'green'|'neutral'
 export function mockInvoicesTableData() {
   const createSubTableData = (
     voucherType: string,
@@ -62,6 +62,7 @@ export function mockInvoicesTableData() {
     };
   };
   const createTableData = (
+    id:number,
     vouchers: Array<ReturnType<typeof createSubTableData>>,
     customerNumber: number,
     customerName: string,
@@ -73,6 +74,7 @@ export function mockInvoicesTableData() {
     currency: string
   ) => {
     return {
+      id,
       vouchers,
       customerNumber,
       customerName,
@@ -112,10 +114,11 @@ export function mockInvoicesTableData() {
 
   return [
     createTableData(
+      1,
       [vaucher1, vaucher2],
       1201,
       'Andrew',
-      'red',
+      'neutral',
       'red',
       50,
       1000,
@@ -123,6 +126,7 @@ export function mockInvoicesTableData() {
       'USD'
     ),
     createTableData(
+      2,
       [vaucher2, vaucher3],
       1202,
       'Roman',
@@ -134,10 +138,11 @@ export function mockInvoicesTableData() {
       'USD'
     ),
     createTableData(
+      3,
       [vaucher1, vaucher3],
       1203,
       'Den',
-      'orange',
+      'neutral',
       'green',
       30,
       10000,
@@ -145,6 +150,7 @@ export function mockInvoicesTableData() {
       'EURO'
     ),
     createTableData(
+      4,
       [vaucher2, vaucher1, vaucher3],
       1204,
       'Jon',
@@ -156,6 +162,7 @@ export function mockInvoicesTableData() {
       'USD'
     ),
     createTableData(
+      5,
       [vaucher3, vaucher2, vaucher1],
       1205,
       'Don',
@@ -167,10 +174,11 @@ export function mockInvoicesTableData() {
       'EURO'
     ),
     createTableData(
+      6,
       [vaucher2, vaucher1],
       1206,
       'Frank',
-      'green',
+      'neutral',
       'red',
       0.5,
       800000,

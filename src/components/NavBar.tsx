@@ -59,33 +59,33 @@ export function NavBar({
             component='div'
             sx={{ flexGrow: 1 }}
           >
-            settl.
+            settle.
           </Typography>
 
           {isAuthenticated && (
             <>
               {' '}
-              <Button>
+              <Button sx={{ textTransform: 'none' }}>
                 <NavLink to='/invoices' style={defineLinkStyle}>
                   Invoices
                 </NavLink>
               </Button>
-              <Button>
+              <Button sx={{ textTransform: 'none' }}>
                 <NavLink to='/history' style={defineLinkStyle}>
                   History
                 </NavLink>
               </Button>
-              <Button>
+              <Button sx={{ textTransform: 'none' }}>
                 <NavLink to='/debitors' style={defineLinkStyle}>
                   Debitors
                 </NavLink>
               </Button>
-              <Button>
+              <Button sx={{ textTransform: 'none' }}>
                 <NavLink to='/statistics' style={defineLinkStyle}>
                   Statistics
                 </NavLink>
               </Button>
-              <Button>
+              <Button sx={{ textTransform: 'none' }}>
                 <NavLink to='/admin' style={defineLinkStyle}>
                   Admin
                 </NavLink>

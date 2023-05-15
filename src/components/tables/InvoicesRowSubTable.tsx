@@ -20,76 +20,90 @@ const subTableHeaders = [
 ];
 
 export function InvoicesRowSubTable({
-  isExpanded,
   vouchers,
 }: {
-  isExpanded: boolean;
   vouchers: InvoiceData['vouchers'];
 }) {
   return (
     <>
-      {isExpanded && (
-        <>
-          <TableRow
-            sx={{
-              '& > *': {
-                borderBottom: 'unset',
-                border: 'none',
-                background: grey[50],
-              },
-            }}
-          >
-            {subTableHeaders.map((header) => (
-              <TableCell align='left'>{header}</TableCell>
-            ))}
-          </TableRow>
-          {vouchers.map((voucherData, index) => (
-            <TableRow
-              key={index}
-              sx={{
-                '& > *': {
-                  borderBottom: 'unset',
-                  border: 'none',
-                  backgroundColor: grey[50],
-                },
-              }}
-            >
-              <TableCell>
-                <Stack direction={'row'} justifyContent={'end'}>
-                  <CheckboxCell isChosen={false} handleChange={() => {}} />
-                </Stack>
-              </TableCell>
-              <TableCell align='left'>{voucherData.voucherType}</TableCell>
-              <TableCell align='left'>{voucherData.voucherNumber}</TableCell>
-              <TableCell align='left'>{voucherData.originalAmount}</TableCell>
-              <TableCell align='left'>{voucherData.remainingAmount}</TableCell>
-              <TableCell>{voucherData.invoiceDate}</TableCell>
-              <TableCell>{voucherData.daysPast}</TableCell>
+      <TableRow
+        sx={{
+          '& > *': {
+            borderBottom: 'unset',
+            border: 'none',
+            background: grey[50],
+            color: grey[500],
+          },
+        }}
+      >
+        {subTableHeaders.map((header) => (
+          <TableCell align='left'>{header}</TableCell>
+        ))}
+      </TableRow>
+      {vouchers.map((voucherData, index) => (
+        <TableRow
+          key={index}
+          sx={{
+            '& > *': {
+              borderBottom: 'unset',
+              border: 'none',
+              backgroundColor: grey[50],
+              color: grey[700],
+            },
+          }}
+        >
+          <TableCell>
+            <Stack direction={'row'} justifyContent={'end'}>
+              <CheckboxCell isChosen={false} handleChange={() => {}} />
+            </Stack>
+          </TableCell>
+          <TableCell align='left'>{voucherData.voucherType}</TableCell>
+          <TableCell align='left'>{voucherData.voucherNumber}</TableCell>
+          <TableCell align='left'>{voucherData.originalAmount}</TableCell>
+          <TableCell align='left'>{voucherData.remainingAmount}</TableCell>
+          <TableCell>{voucherData.invoiceDate}</TableCell>
+          <TableCell>{voucherData.daysPast}</TableCell>
 
-              <TableCell>
-                <Stack direction={'row'} justifyContent={'end'}>
-                  <IconButton color='error' aria-label='settings'>
-                    <PauseCircleIcon />
-                  </IconButton>
-                  <IconButton color='warning' aria-label='settings'>
-                    <WarningIcon />
-                  </IconButton>
-                </Stack>
-              </TableCell>
-              <TableCell>
-                <Stack direction={'row'} justifyContent={'space-between'}>
-                  <IconButton color='primary' aria-label='settings'>
-                    <TextsmsIcon />
-                  </IconButton>
-                  <IconButton aria-label='settings'>
-                    <MoreVertIcon />
-                  </IconButton>
-                </Stack>
-              </TableCell>
-            </TableRow>
-          ))}
-        </>
-      )}
+          <TableCell>
+            <Stack direction={'row'} justifyContent={'end'}>
+              <IconButton color='error' aria-label='settings'>
+                <PauseCircleIcon />
+              </IconButton>
+              <IconButton color='warning' aria-label='settings'>
+                <WarningIcon />
+              </IconButton>
+            </Stack>
+          </TableCell>
+          <TableCell>
+            <Stack direction={'row'} justifyContent={'space-between'}>
+              <IconButton color='primary' aria-label='settings'>
+                <TextsmsIcon />
+              </IconButton>
+              <IconButton aria-label='settings'>
+                <MoreVertIcon />
+              </IconButton>
+            </Stack>
+          </TableCell>
+        </TableRow>
+      ))}
+      <TableRow
+          sx={{
+            '& > *': {
+              borderBottom: 'unset',
+              border: 'none',
+              backgroundColor: grey[50],
+              color: grey[900],
+              fontWeight:600
+            },
+          }}
+        >
+        <TableCell></TableCell>
+        <TableCell>Sum</TableCell>
+        <TableCell>{vouchers.length}</TableCell>
+        <TableCell>{vouchers.reduce((acc,voucher)=> acc+=voucher.originalAmount,0)}</TableCell>
+        <TableCell>{vouchers.reduce((acc,voucher)=> acc+=voucher.remainingAmount,0)}</TableCell>
+        <TableCell colSpan={4}></TableCell>
+        </TableRow>
     </>
   );
 }
