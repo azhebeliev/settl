@@ -1,52 +1,44 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import {
-  ButtonGroup,
   FormControl,
-  InputBase,
   InputLabel,
   MenuItem,
   Select,
   Stack,
   Typography,
 } from '@mui/material';
-import Button from '@mui/material/Button';
-import { grey } from '@mui/material/colors';
+import { Dispatch } from 'react';
+import { InvoiceData } from '../../mock/mockInvoices';
+import { InvoicesStatus } from '../../Types/InvoicesTypes';
+import { InvoicesTableFilterControl } from './InvoicesTableFilterControl';
+import { InvoicesTableStatusControl } from './InvoicesTableStatusControl';
 
-export function InvoicesTableControlSection() {
+export function InvoicesTableControlSection({
+  data,
+  status,
+  setStatus,
+  globalFilter,
+  setGlobalFilter,
+}: {
+  data: InvoiceData[];
+  status: InvoicesStatus;
+  setStatus: Dispatch<InvoicesStatus>;
+  globalFilter: string;
+  setGlobalFilter: Dispatch<string>;
+}) {
   return (
     <Stack
       justifyContent={'space-between'}
       direction={{ md: 'column-reverse', xl: 'row' }}
-      paddingTop={2}
+      paddingTop={4}
       spacing={1}
     >
-      <Stack justifyContent={'space-between'}>
-        <Typography noWrap>
-          <span style={{ color: grey[500], fontSize: 14 }}>
-            Time of last sync:{' '}
-          </span>
-          <span>24.11.2022 - 07.00.05(24h)</span>
-        </Typography>
-        <ButtonGroup variant='outlined'>
-          <Button>Active</Button>
-          <Button>Stopped</Button>
-        </ButtonGroup>
-      </Stack>
+      <InvoicesTableStatusControl status={status} setStatus={setStatus} />
       <Stack direction={{ md: 'column', xl: 'row' }} spacing={1}>
-        <Stack justifyContent={'space-between'}>
-          <InputBase onChange={() => {}} placeholder='Search' />
-          <Stack direction={'row'} spacing={1} color={grey[500]}>
-            <Button color='inherit' variant='outlined'>
-              Select all
-            </Button>
-            <Button color='inherit' variant='outlined'>
-              Remove all
-            </Button>
-            <Button color='inherit' variant='outlined'>
-              Expand all
-            </Button>
-          </Stack>
-        </Stack>
+        <InvoicesTableFilterControl
+          globalFilter={globalFilter}
+          setGlobalFilter={setGlobalFilter}
+        />
         <Stack spacing={1}>
           <Stack direction={'row'} spacing={1}>
             <Typography paddingTop={2} variant='body2'>
@@ -57,25 +49,22 @@ export function InvoicesTableControlSection() {
               <Select
                 labelId='invoices-period-label'
                 id='invoices-period'
-                value={'14'}
+                value={14}
                 label='period'
                 onChange={() => {}}
               >
                 <MenuItem value=''>
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>1</MenuItem>
-                <MenuItem value={20}>7</MenuItem>
-                <MenuItem value={30}>14</MenuItem>
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={7}>7</MenuItem>
+                <MenuItem value={14}>14</MenuItem>
                 <MenuItem value={30}>30</MenuItem>
               </Select>
             </FormControl>
           </Stack>
           <Stack direction={'row'} spacing={1}>
-            <LoadingButton
-              variant='contained'
-              loading={false}
-            >
+            <LoadingButton variant='contained' loading={false}>
               Download
             </LoadingButton>
             <LoadingButton variant='contained' loading={false}>

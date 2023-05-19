@@ -38,7 +38,7 @@ export const invoicesColumns: ColumnDef<InvoiceData>[] = [
         <CheckboxCell
           isChosen={row.getIsSelected()}
           handleChange={() => {
-            (table.options as any).handleEdit();
+            //(table.options as any).handleEdit();
             row.getToggleSelectedHandler();
           }}
         />

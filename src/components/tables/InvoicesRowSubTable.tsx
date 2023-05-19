@@ -37,7 +37,9 @@ export function InvoicesRowSubTable({
         }}
       >
         {subTableHeaders.map((header) => (
-          <TableCell align='left'>{header}</TableCell>
+          <TableCell key={header} sx={{ color: grey[500] }} align='left'>
+            {header}
+          </TableCell>
         ))}
       </TableRow>
       {vouchers.map((voucherData, index) => (
@@ -49,6 +51,7 @@ export function InvoicesRowSubTable({
               border: 'none',
               backgroundColor: grey[50],
               color: grey[700],
+              paddingY: '0',
             },
           }}
         >
@@ -87,23 +90,33 @@ export function InvoicesRowSubTable({
         </TableRow>
       ))}
       <TableRow
-          sx={{
-            '& > *': {
-              borderBottom: 'unset',
-              border: 'none',
-              backgroundColor: grey[50],
-              color: grey[900],
-              fontWeight:600
-            },
-          }}
-        >
+        sx={{
+          '& > *': {
+            borderBottom: 'unset',
+            border: 'none',
+            backgroundColor: grey[50],
+            color: grey[900],
+            fontWeight: 600,
+          },
+        }}
+      >
         <TableCell></TableCell>
         <TableCell>Sum</TableCell>
         <TableCell>{vouchers.length}</TableCell>
-        <TableCell>{vouchers.reduce((acc,voucher)=> acc+=voucher.originalAmount,0)}</TableCell>
-        <TableCell>{vouchers.reduce((acc,voucher)=> acc+=voucher.remainingAmount,0)}</TableCell>
+        <TableCell>
+          {vouchers.reduce(
+            (acc, voucher) => (acc += voucher.originalAmount),
+            0
+          )}
+        </TableCell>
+        <TableCell>
+          {vouchers.reduce(
+            (acc, voucher) => (acc += voucher.remainingAmount),
+            0
+          )}
+        </TableCell>
         <TableCell colSpan={4}></TableCell>
-        </TableRow>
+      </TableRow>
     </>
   );
 }

@@ -10,8 +10,9 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import { grey, lightBlue } from '@mui/material/colors';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export function NavBar({
   isAuthenticated,
@@ -47,7 +48,6 @@ export function NavBar({
     <AppBar
       position='static'
       color='transparent'
-      //sx={{ boxShadow: '0 5px 5px -8px ' }}
       sx={{ borderBottom: '2px solid lightgrey', boxShadow: 'none' }}
     >
       <Toolbar disableGutters>
@@ -64,32 +64,10 @@ export function NavBar({
 
           {isAuthenticated && (
             <>
-              {' '}
-              <Button sx={{ textTransform: 'none' }}>
-                <NavLink to='/invoices' style={defineLinkStyle}>
-                  Invoices
-                </NavLink>
-              </Button>
-              <Button sx={{ textTransform: 'none' }}>
-                <NavLink to='/history' style={defineLinkStyle}>
-                  History
-                </NavLink>
-              </Button>
-              <Button sx={{ textTransform: 'none' }}>
-                <NavLink to='/debitors' style={defineLinkStyle}>
-                  Debitors
-                </NavLink>
-              </Button>
-              <Button sx={{ textTransform: 'none' }}>
-                <NavLink to='/statistics' style={defineLinkStyle}>
-                  Statistics
-                </NavLink>
-              </Button>
-              <Button sx={{ textTransform: 'none' }}>
-                <NavLink to='/admin' style={defineLinkStyle}>
-                  Admin
-                </NavLink>
-              </Button>
+              <CustomLink to='/invoices' text='Invoices' />
+              <CustomLink to='/history' text='History' />
+              <CustomLink to='/debitors' text='Debitors' />
+              <CustomLink to='/admin' text='Admin' />
             </>
           )}
         </Stack>
@@ -141,5 +119,27 @@ export function NavBar({
         </Stack>
       </Toolbar>
     </AppBar>
+  );
+}
+
+function CustomLink({ to, text }: { to: string; text: string }) {
+  const { pathname } = useLocation();
+  return (
+    <Button
+      sx={{
+        textTransform: 'none',
+        backgroundColor: pathname === to ? lightBlue[50] : 'inherit',
+      }}
+    >
+      <Link
+        to={to}
+        style={{
+          textDecoration: 'none',
+          color: pathname === to ? 'inherit' : grey[600],
+        }}
+      >
+        {text}
+      </Link>
+    </Button>
   );
 }
