@@ -5,7 +5,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import { IconButton, Stack, TableCell, TableRow } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { InvoiceData } from '../../mock/mockInvoices';
-import { CheckboxCell } from './Cells/CheckBoxCell';
+import { CheckboxCell } from '../../components/tables/Cells/CheckBoxCell';
 
 const subTableHeaders = [
   '',
@@ -20,9 +20,9 @@ const subTableHeaders = [
 ];
 
 export function InvoicesRowSubTable({
-  vouchers,
+  data,
 }: {
-  vouchers: InvoiceData['vouchers'];
+  data: InvoiceData['vouchers'];
 }) {
   return (
     <>
@@ -42,7 +42,7 @@ export function InvoicesRowSubTable({
           </TableCell>
         ))}
       </TableRow>
-      {vouchers.map((voucherData, index) => (
+      {data.map((voucherData, index) => (
         <TableRow
           key={index}
           sx={{
@@ -102,15 +102,15 @@ export function InvoicesRowSubTable({
       >
         <TableCell></TableCell>
         <TableCell>Sum</TableCell>
-        <TableCell>{vouchers.length}</TableCell>
+        <TableCell>{data.length}</TableCell>
         <TableCell>
-          {vouchers.reduce(
+          {data.reduce(
             (acc, voucher) => (acc += voucher.originalAmount),
             0
           )}
         </TableCell>
         <TableCell>
-          {vouchers.reduce(
+          {data.reduce(
             (acc, voucher) => (acc += voucher.remainingAmount),
             0
           )}

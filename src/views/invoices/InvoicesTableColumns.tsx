@@ -6,10 +6,10 @@ import { ColumnDef } from '@tanstack/react-table';
 import { CheckboxCell } from '../../components/tables/Cells/CheckBoxCell';
 import { FlagCell } from '../../components/tables/Cells/FlagCell';
 import { InvoiceData } from '../../mock/mockInvoices';
-const ExpandCircleLeftIcon = () => (
+const ExpandCircleRightIcon = () => (
   <ExpandCircleDownIcon
     sx={{
-      transform: 'rotate(90deg)',
+      transform: 'rotate(-90deg)',
     }}
   />
 );
@@ -18,9 +18,9 @@ export const invoicesColumns: ColumnDef<InvoiceData>[] = [
   {
     header: () => null,
     id: 'toggler',
-    cell: ({ row, table }) => (
+    cell: ({ row }) => (
       <Stack direction={'row'} justifyContent={'space-between'}>
-        {row.original.vouchers.length && (
+        {row.original.vouchers.length ? (
           <IconButton
             aria-label='expand row'
             size='small'
@@ -31,14 +31,15 @@ export const invoicesColumns: ColumnDef<InvoiceData>[] = [
             {row.getIsExpanded() ? (
               <ExpandCircleDownIcon />
             ) : (
-              <ExpandCircleLeftIcon />
+              <ExpandCircleRightIcon />
             )}
           </IconButton>
+        ) : (
+          <div></div>
         )}
         <CheckboxCell
           isChosen={row.getIsSelected()}
           handleChange={() => {
-            //(table.options as any).handleEdit();
             row.getToggleSelectedHandler();
           }}
         />

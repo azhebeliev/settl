@@ -22,42 +22,37 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
-  TableOptions,
   useReactTable,
 } from '@tanstack/react-table';
 import React, { useMemo, useState } from 'react';
-import { InvoiceData } from '../../mock/mockInvoices';
-import { InvoicesRowSubTable } from '../../views/invoices/InvoicesRowSubTable';
 import { TablePagination } from './TablePagination';
 
-export function InvoicesTable({
+export function ReactTable<T>({
   columns,
-  //   handleDelete,
-  //   handleEdit,
   data,
   objectsContainer,
   globalFilter,
+  enabledPagination,
+  enableSorting,
+  SubRow,
+  subRowKey,
 }: {
-  columns: ColumnDef<InvoiceData>[];
-  //   handleDelete?: (id: number | string) => Promise<void>;
-  //   handleEdit?: (id: number, newValue: Partial<InvoiceData>) => Promise<void>;
-  data: InvoiceData[];
-  globalFilter: string;
+  columns: ColumnDef<T>[];
+  data: T[];
+  globalFilter?: string;
   objectsContainer?: Record<string, any>;
+  enabledPagination?: boolean;
+  enableSorting?: boolean;
+  SubRow?: React.FC<{ data: any }>;
+  subRowKey?: keyof T;
 }) {
   const [loading, setLoading] = useState<boolean>(false);
-  const defaultPerPage = 5;
-
-  //   async function handleDeleteWithLoader(id: number | string) {
-  //     if (handleDelete) {
-  //       setLoading(true);
-  //       await handleDelete(id).finally(() => setLoading(false));
-  //     }
-  //   }
 
   const [expanded, setExpanded] = useState<ExpandedState>({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const defaultPagSize = 5;
+  const subRowEnabled = SubRow && subRowKey;
+
   const table = useReactTable({
     data: useMemo(() => data, []),
     columns: useMemo(() => columns, []),
@@ -73,8 +68,9 @@ export function InvoicesTable({
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    enableSorting: enableSorting ? true : false,
     initialState: { pagination: { pageSize: defaultPagSize, pageIndex: 0 } },
-  } as TableOptions<InvoiceData>);
+  });
 
   return (
     <>
@@ -139,8 +135,8 @@ export function InvoicesTable({
                       );
                     })}
                   </TableRow>
-                  {row.getIsExpanded() && (
-                    <InvoicesRowSubTable data={row.original.vouchers} />
+                  {subRowEnabled && row.getIsExpanded() && (
+                    <SubRow data={row.original[subRowKey]} />
                   )}
                 </React.Fragment>
               );
@@ -149,7 +145,7 @@ export function InvoicesTable({
         </Table>
       </TableContainer>
       <Divider />
-      <TablePagination table={table} />
+      {enabledPagination && <TablePagination table={table} />}
     </>
   );
 }

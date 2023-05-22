@@ -11,11 +11,12 @@ import {
 } from '../../mock/mockChartsData';
 
 export function InvoicesChartSection() {
-  const [isExpanded, setExpanded] = useState(false);
+  const [isAccountsChartExpanded, setAccountsChartExpanded] = useState(false);
+  const [isDsoChartExpanded, setDsoChartExpanded] = useState(false);
   return (
     <Box>
       <Grid mt={2} container spacing={2}>
-        <Grid item xs={isExpanded ? 12 : 3}>
+        <Grid item xs={isAccountsChartExpanded ? 12 : 3}>
           <Box
             sx={{
               backgroundColor: grey[100],
@@ -24,21 +25,21 @@ export function InvoicesChartSection() {
           >
             <IconButton
               sx={{ position: 'absolute', right: 0, top: 0, zIndex: 1000 }}
-              onClick={() => setExpanded(!isExpanded)}
+              onClick={() => setAccountsChartExpanded(!isAccountsChartExpanded)}
             >
-              {isExpanded ? (
+              {isAccountsChartExpanded ? (
                 <OpenInNewOffIcon htmlColor={grey[500]} />
               ) : (
                 <OpenInNewIcon htmlColor={grey[500]} />
               )}
             </IconButton>
             <AccountReceivablesChart
-              size={isExpanded ? 'normal' : 'small'}
+              size={isAccountsChartExpanded ? 'normal' : 'small'}
               data={mockAccountReceivablesData()}
             />
           </Box>
         </Grid>
-        <Grid item xs={isExpanded ? 12 : 3}>
+        <Grid item xs={isDsoChartExpanded ? 12 : 3}>
           <Box
             sx={{
               backgroundColor: grey[100],
@@ -47,16 +48,16 @@ export function InvoicesChartSection() {
           >
             <IconButton
               sx={{ position: 'absolute', right: 0, top: 0, zIndex: 1000 }}
-              onClick={() => setExpanded(!isExpanded)}
+              onClick={() => setDsoChartExpanded(!isDsoChartExpanded)}
             >
-              {isExpanded ? (
+              {isDsoChartExpanded ? (
                 <OpenInNewOffIcon htmlColor={grey[500]} />
               ) : (
                 <OpenInNewIcon htmlColor={grey[500]} />
               )}
             </IconButton>
             <DsoDevelopmentChart
-              size={isExpanded ? 'normal' : 'small'}
+              size={isDsoChartExpanded ? 'normal' : 'small'}
               data={mockDsoDevelopmentChartsData()}
             />
           </Box>

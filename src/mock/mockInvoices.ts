@@ -115,7 +115,7 @@ export function mockInvoicesTableData() {
   return [
     createTableData(
       1,
-      [vaucher1, vaucher2],
+      [],
       1201,
       'Andrew',
       'neutral',
