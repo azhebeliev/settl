@@ -42,14 +42,15 @@ export const mockedCards: {
   },
 ];
 
-export type StatusMarker = 'red' | 'orange' | 'green'|'neutral'
+export type SendingVariant = 'auto' | 'semi-auto';
+export type StatusMarker = 'red' | 'orange' | 'green' | 'neutral';
 export function mockInvoicesTableData() {
   const createSubTableData = (
     voucherType: string,
     voucherNumber: number,
     originalAmount: number,
     remainingAmount: number,
-    invoiceDate: string,
+    invoiceDate: Date,
     daysPast: number
   ) => {
     return {
@@ -62,7 +63,7 @@ export function mockInvoicesTableData() {
     };
   };
   const createTableData = (
-    id:number,
+    id: number,
     vouchers: Array<ReturnType<typeof createSubTableData>>,
     customerNumber: number,
     customerName: string,
@@ -71,7 +72,10 @@ export function mockInvoicesTableData() {
     bankruptcy: number,
     totalOriginalAmount: number,
     totalRemainingAmount: number,
-    currency: string
+    currency: string,
+    type: string,
+    sendingVariant: SendingVariant,
+    workFlow: string
   ) => {
     return {
       id,
@@ -84,31 +88,34 @@ export function mockInvoicesTableData() {
       totalOriginalAmount,
       totalRemainingAmount,
       currency,
+      type,
+      sendingVariant,
+      workFlow,
     };
   };
 
-  const vaucher1 = createSubTableData(
+  const voucher1 = createSubTableData(
     'Invoice',
     1,
     300,
     200,
-    '12.05.2022',
+    new Date('01.01.2023'),
     39
   );
-  const vaucher2 = createSubTableData(
+  const voucher2 = createSubTableData(
     'Not Invoice',
     1,
     800,
     300,
-    '08.06.2023',
+    new Date('01.02.2023'),
     3
   );
-  const vaucher3 = createSubTableData(
+  const voucher3 = createSubTableData(
     'Invoice',
     1,
     1000,
     400,
-    '09.10.2021',
+    new Date('01.03.2023'),
     306
   );
 
@@ -123,11 +130,14 @@ export function mockInvoicesTableData() {
       50,
       1000,
       800,
-      'USD'
+      'USD',
+      'Personal',
+      'auto',
+      ''
     ),
     createTableData(
       2,
-      [vaucher2, vaucher3],
+      [voucher2, voucher3],
       1202,
       'Roman',
       'red',
@@ -135,11 +145,14 @@ export function mockInvoicesTableData() {
       70,
       1000,
       600,
-      'USD'
+      'USD',
+      'Personal',
+      'semi-auto',
+      ''
     ),
     createTableData(
       3,
-      [vaucher1, vaucher3],
+      [voucher1, voucher3],
       1203,
       'Den',
       'neutral',
@@ -147,11 +160,14 @@ export function mockInvoicesTableData() {
       30,
       10000,
       8500,
-      'EURO'
+      'EURO',
+      'Personal',
+      'auto',
+      ''
     ),
     createTableData(
       4,
-      [vaucher2, vaucher1, vaucher3],
+      [voucher2, voucher1, voucher3],
       1204,
       'Jon',
       'green',
@@ -159,11 +175,14 @@ export function mockInvoicesTableData() {
       40,
       12000,
       8000,
-      'USD'
+      'USD',
+      'SomeType',
+      'semi-auto',
+      ''
     ),
     createTableData(
       5,
-      [vaucher3, vaucher2, vaucher1],
+      [voucher3, voucher2, voucher1],
       1205,
       'Don',
       'red',
@@ -171,11 +190,14 @@ export function mockInvoicesTableData() {
       80,
       1000000,
       800,
-      'EURO'
+      'EURO',
+      'SomeType',
+      'semi-auto',
+      ''
     ),
     createTableData(
       6,
-      [vaucher2, vaucher1],
+      [voucher2, voucher1],
       1206,
       'Frank',
       'neutral',
@@ -183,10 +205,13 @@ export function mockInvoicesTableData() {
       0.5,
       800000,
       800,
-      'USD'
+      'USD',
+      'SomeType',
+      'auto',
+      ''
     ),
   ];
 }
 
-export type InvoiceData = ReturnType<typeof mockInvoicesTableData>[0]
+export type InvoiceData = ReturnType<typeof mockInvoicesTableData>[0];
 export type VoucherData = InvoiceData['vouchers'][0];

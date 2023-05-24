@@ -1,28 +1,28 @@
 import NorthIcon from '@mui/icons-material/North';
 import SouthIcon from '@mui/icons-material/South';
 import {
-  Box,
-  Divider,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
+    Box,
+    Divider,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
 } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { blue, grey, lightBlue } from '@mui/material/colors';
 import {
-  ColumnDef,
-  ExpandedState,
-  flexRender,
-  getCoreRowModel,
-  getExpandedRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  SortingState,
-  useReactTable,
+    ColumnDef,
+    ExpandedState,
+    flexRender,
+    getCoreRowModel,
+    getExpandedRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    SortingState,
+    useReactTable
 } from '@tanstack/react-table';
 import React, { useMemo, useState } from 'react';
 import { TablePagination } from './TablePagination';
@@ -32,26 +32,23 @@ export function ReactTable<T>({
   data,
   objectsContainer,
   globalFilter,
-  enabledPagination,
+  enablePagination,
   enableSorting,
   SubRow,
-  subRowKey,
 }: {
   columns: ColumnDef<T>[];
   data: T[];
   globalFilter?: string;
   objectsContainer?: Record<string, any>;
-  enabledPagination?: boolean;
+  enablePagination?: boolean;
   enableSorting?: boolean;
-  SubRow?: React.FC<{ data: any }>;
-  subRowKey?: keyof T;
+  SubRow?: React.FC<{ data: T }>;
 }) {
   const [loading, setLoading] = useState<boolean>(false);
 
   const [expanded, setExpanded] = useState<ExpandedState>({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const defaultPagSize = 5;
-  const subRowEnabled = SubRow && subRowKey;
 
   const table = useReactTable({
     data: useMemo(() => data, []),
@@ -120,11 +117,11 @@ export function ReactTable<T>({
             {table.getRowModel().rows.map((row) => {
               return (
                 <React.Fragment key={row.id}>
-                  <TableRow>
+                  <TableRow sx={{'&:hover':{backgroundColor:blue[50]}}}>
                     {row.getVisibleCells().map((cell) => {
                       return (
                         <TableCell
-                          sx={{ paddingY: '0', color: grey[700] }}
+                          sx={{ color: grey[700] }}
                           key={cell.id}
                         >
                           {flexRender(
@@ -135,8 +132,8 @@ export function ReactTable<T>({
                       );
                     })}
                   </TableRow>
-                  {subRowEnabled && row.getIsExpanded() && (
-                    <SubRow data={row.original[subRowKey]} />
+                  {SubRow && row.getIsExpanded() && (
+                    <SubRow data={row.original} />
                   )}
                 </React.Fragment>
               );
@@ -145,7 +142,7 @@ export function ReactTable<T>({
         </Table>
       </TableContainer>
       <Divider />
-      {enabledPagination && <TablePagination table={table} />}
+      {enablePagination && <TablePagination table={table} />}
     </>
   );
 }

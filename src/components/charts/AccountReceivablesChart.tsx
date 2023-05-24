@@ -18,9 +18,11 @@ export function AccountReceivablesChart({
     credits: {
       enabled: false,
     },
-
+    accessibility: {
+      enabled:false
+    },
     chart: {
-      height: size === 'small' ? '200vh' : '600vh',
+      height: size === 'small' ? '200px' : '600px',
     },
     title: {
       useHTML: true,

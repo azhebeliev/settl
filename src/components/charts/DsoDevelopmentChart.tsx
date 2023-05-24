@@ -20,9 +20,12 @@ export function DsoDevelopmentChart({
     credits: {
       enabled: false,
     },
+    accessibility: {
+      enabled:false
+    },
     chart: {
       type: 'column',
-      height: size === 'small' ? '200vh' : '600vh',
+      height: size === 'small' ? '200px' : '600px',
     },
     title: {
       text: 'DSO development last 12 months',

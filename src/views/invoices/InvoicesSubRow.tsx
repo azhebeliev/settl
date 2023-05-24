@@ -4,8 +4,9 @@ import TextsmsIcon from '@mui/icons-material/Textsms';
 import WarningIcon from '@mui/icons-material/Warning';
 import { IconButton, Stack, TableCell, TableRow } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { InvoiceData } from '../../mock/mockInvoices';
+import dayjs from 'dayjs';
 import { CheckboxCell } from '../../components/tables/Cells/CheckBoxCell';
+import { InvoiceData } from '../../mock/mockInvoices';
 
 const subTableHeaders = [
   '',
@@ -19,11 +20,7 @@ const subTableHeaders = [
   '',
 ];
 
-export function InvoicesRowSubTable({
-  data,
-}: {
-  data: InvoiceData['vouchers'];
-}) {
+export function InvoicesSubRow({ data }: { data: InvoiceData }) {
   return (
     <>
       <TableRow
@@ -32,17 +29,17 @@ export function InvoicesRowSubTable({
             borderBottom: 'unset',
             border: 'none',
             background: grey[50],
-            color: grey[500],
+            color: grey[500]
           },
         }}
       >
-        {subTableHeaders.map((header) => (
-          <TableCell key={header} sx={{ color: grey[500] }} align='left'>
+        {subTableHeaders.map((header, index) => (
+          <TableCell key={index} align='left'>
             {header}
           </TableCell>
         ))}
       </TableRow>
-      {data.map((voucherData, index) => (
+      {data.vouchers.map((voucherData, index) => (
         <TableRow
           key={index}
           sx={{
@@ -64,7 +61,9 @@ export function InvoicesRowSubTable({
           <TableCell align='left'>{voucherData.voucherNumber}</TableCell>
           <TableCell align='left'>{voucherData.originalAmount}</TableCell>
           <TableCell align='left'>{voucherData.remainingAmount}</TableCell>
-          <TableCell>{voucherData.invoiceDate}</TableCell>
+          <TableCell>
+            {dayjs(voucherData.invoiceDate).format('DD.MM.YYYY')}
+          </TableCell>
           <TableCell>{voucherData.daysPast}</TableCell>
 
           <TableCell>
@@ -102,15 +101,15 @@ export function InvoicesRowSubTable({
       >
         <TableCell></TableCell>
         <TableCell>Sum</TableCell>
-        <TableCell>{data.length}</TableCell>
+        <TableCell>{data.vouchers.length}</TableCell>
         <TableCell>
-          {data.reduce(
+          {data.vouchers.reduce(
             (acc, voucher) => (acc += voucher.originalAmount),
             0
           )}
         </TableCell>
         <TableCell>
-          {data.reduce(
+          {data.vouchers.reduce(
             (acc, voucher) => (acc += voucher.remainingAmount),
             0
           )}

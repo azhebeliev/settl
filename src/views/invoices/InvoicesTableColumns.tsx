@@ -20,23 +20,20 @@ export const invoicesColumns: ColumnDef<InvoiceData>[] = [
     id: 'toggler',
     cell: ({ row }) => (
       <Stack direction={'row'} justifyContent={'space-between'}>
-        {row.original.vouchers.length ? (
-          <IconButton
-            aria-label='expand row'
-            size='small'
-            onClick={() => {
-              row.toggleExpanded();
-            }}
-          >
-            {row.getIsExpanded() ? (
-              <ExpandCircleDownIcon />
-            ) : (
-              <ExpandCircleRightIcon />
-            )}
-          </IconButton>
-        ) : (
-          <div></div>
-        )}
+        <IconButton
+          aria-label='expand row'
+          size='small'
+          onClick={() => {
+            row.toggleExpanded();
+          }}
+          disabled={!row.original.vouchers.length}
+        >
+          {row.getIsExpanded() ? (
+            <ExpandCircleDownIcon />
+          ) : (
+            <ExpandCircleRightIcon />
+          )}
+        </IconButton>
         <CheckboxCell
           isChosen={row.getIsSelected()}
           handleChange={() => {

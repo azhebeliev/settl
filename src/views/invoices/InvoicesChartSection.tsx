@@ -3,8 +3,8 @@ import OpenInNewOffIcon from '@mui/icons-material/OpenInNewOff';
 import { Box, Grid, IconButton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { useState } from 'react';
-import { AccountReceivablesChart } from '../../components/graph/AccountReceivablesChart';
-import { DsoDevelopmentChart } from '../../components/graph/DsoDevelopmentChart';
+import { AccountReceivablesChart } from '../../components/charts/AccountReceivablesChart';
+import { DsoDevelopmentChart } from '../../components/charts/DsoDevelopmentChart';
 import {
   mockAccountReceivablesData,
   mockDsoDevelopmentChartsData,

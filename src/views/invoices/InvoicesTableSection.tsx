@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { InvoicesRowSubTable } from './InvoicesRowSubTable';
 import { ReactTable } from '../../components/tables/ReactTable';
 import { mockInvoicesTableData } from '../../mock/mockInvoices';
 import { InvoicesStatus } from '../../Types/InvoicesTypes';
+import { InvoicesSubRow } from './InvoicesSubRow';
 import { invoicesColumns } from './InvoicesTableColumns';
 import { InvoicesTableControlSection } from './InvoicesTableControlSection';
 
@@ -24,13 +24,12 @@ export function InvoicesTableSection() {
         setGlobalFilter={setGlobalFilter}
       />
       <ReactTable
-        subRowKey='vouchers'
-        SubRow={InvoicesRowSubTable}
+        SubRow={InvoicesSubRow}
         globalFilter={globalFilter}
         data={data}
         columns={invoicesColumns}
         enableSorting
-        enabledPagination
+        enablePagination
       />
     </>
   );

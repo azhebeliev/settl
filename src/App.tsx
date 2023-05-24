@@ -4,6 +4,7 @@ import { AdminRoleGuard } from './auth/AdminRoleGuard';
 import { AuthProvider } from './auth/AuthContext';
 import { AuthGuard } from './auth/AuthGuard';
 import { Layout } from './layout/Layout';
+import { DebitorsView } from './views/DebitorsView';
 import { InvoicesView } from './views/InvoicesView';
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
               path='debitors'
               element={
                 <AuthGuard>
-                  <div>Debitors</div>
+                 <DebitorsView/>
                 </AuthGuard>
               }
             />

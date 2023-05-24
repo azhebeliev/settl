@@ -10,9 +10,9 @@ export function FlagCell({
 }: {
   risk: StatusMarker;
   flag: StatusMarker;
-  bankruptcy: number;
+  bankruptcy?: number;
 }) {
-    const {palette} = useTheme();
+  const { palette } = useTheme();
   const defineColor = (status: StatusMarker) => {
     switch (status) {
       case 'red':
@@ -33,7 +33,7 @@ export function FlagCell({
       <Stack direction={'row'} spacing={1}>
         <SquareSharpIcon htmlColor={defineColor(risk)} />
         <FlagSharpIcon htmlColor={defineColor(flag)} />
-        <Typography>{bankruptcy}%</Typography>
+        {bankruptcy !== undefined && <Typography>{bankruptcy}%</Typography>}
       </Stack>
     </>
   );

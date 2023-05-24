@@ -32,18 +32,6 @@ export function NavBar({
     setAnchorEl(null);
   };
 
-  const defineLinkStyle = ({
-    isActive,
-  }: {
-    isActive: boolean;
-    isPending: boolean;
-  }): React.CSSProperties => {
-    return {
-      color: isActive ? 'inherit' : 'gray',
-      textDecoration: 'none',
-    };
-  };
-
   return (
     <AppBar
       position='static'
