@@ -38,12 +38,6 @@ export function DebitorsSubRow({ data }: { data: InvoiceData }) {
           <Grid item xs={12} md={6}>
             <Stack direction={'row'} justifyContent={'space-between'}>
               <Typography variant='h5'>Bankruptcy</Typography>
-              <Typography variant='body1'>
-                {dateFrom.format('DD/MM/YYYY')}
-              </Typography>
-              <Typography variant='body1'>
-                {dateTo.format('DD/MM/YYYY')}
-              </Typography>
               <CustomDatePicker onChange={onDateRangeChange} />
             </Stack>
             <Box

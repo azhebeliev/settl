@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export function CustomDatePicker({
   onChange,
@@ -18,7 +20,7 @@ export function CustomDatePicker({
 }) {
   const [visibleDatePicker, setVisibleDatePicker] = useState(false);
   const [dateFrom, setDateFrom] = useState(dayjs());
-  const [dateTo, setateTo] = useState(dayjs());
+  const [dateTo, setDateTo] = useState(dayjs());
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -26,6 +28,8 @@ export function CustomDatePicker({
       key: 'selection',
     },
   ]);
+  const theme = useTheme();
+  const isMdScreen = useMediaQuery(theme.breakpoints.up('md'));
 
   const handleDateFieldChange = (marker: 'from' | 'to', date: Dayjs | null) => {
     if (!date || !date.isValid()) return;
@@ -42,7 +46,7 @@ export function CustomDatePicker({
   const handleDateRangeChange = (range: (typeof dateRange)[0]) => {
     setDateRange([range]);
     setDateFrom(dayjs(range.startDate));
-    setateTo(dayjs(range.endDate));
+    setDateTo(dayjs(range.endDate));
     onChange(dayjs(range.startDate), dayjs(range.endDate));
   };
 
@@ -101,7 +105,7 @@ export function CustomDatePicker({
             moveRangeOnFirstSelection={false}
             months={2}
             ranges={dateRange}
-            direction='horizontal'
+            direction={isMdScreen ? 'horizontal':'vertical'}
             showDateDisplay={false}
           />
         </Paper>
