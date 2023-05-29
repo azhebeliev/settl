@@ -17,7 +17,6 @@ export const debitorsColumns: ColumnDef<InvoiceData>[] = [
     cell: ({ row }) => (
       <>
         <IconButton
-          aria-label='expand row'
           size='small'
           onClick={() => {
             row.toggleExpanded();

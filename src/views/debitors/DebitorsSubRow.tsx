@@ -37,8 +37,8 @@ export function DebitorsSubRow({ data }: { data: InvoiceData }) {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Stack direction={'row'} justifyContent={'space-between'}>
-              <Typography variant='h5'>Bankruptcy</Typography>
-              <CustomDatePicker onChange={onDateRangeChange} />
+              <Typography mt={1.5} variant='h5'>Bankruptcy</Typography>
+                <CustomDatePicker onChange={onDateRangeChange} />
             </Stack>
             <Box
               my={1}
@@ -52,7 +52,7 @@ export function DebitorsSubRow({ data }: { data: InvoiceData }) {
           </Grid>
           <Grid item xs={12} md={6}>
             <Stack direction={'row'} justifyContent={'space-between'}>
-              <Typography variant='h5'>Flags</Typography>
+              <Typography mt={1.5} variant='h5'>Flags</Typography>
             </Stack>
             <TableContainer
               sx={{

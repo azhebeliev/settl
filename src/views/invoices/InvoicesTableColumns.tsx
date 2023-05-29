@@ -21,7 +21,6 @@ export const invoicesColumns: ColumnDef<InvoiceData>[] = [
     cell: ({ row }) => (
       <Stack direction={'row'} justifyContent={'space-between'}>
         <IconButton
-          aria-label='expand row'
           size='small'
           onClick={() => {
             row.toggleExpanded();
@@ -87,12 +86,17 @@ export const invoicesColumns: ColumnDef<InvoiceData>[] = [
   {
     header: () => null,
     id: 'actions',
-    cell: ({ row }) => (
+    cell: ({ row, table }) => (
       <Stack direction={'row'} justifyContent={'space-between'}>
-        <IconButton color='primary' aria-label='settings'>
-          <TextsmsIcon />
+        <IconButton
+          onClick={() =>
+            table.options.meta?.objectsContainer?.handleEdit(row.original)
+          }
+          color='primary'
+        >
+          <TextsmsIcon/>
         </IconButton>
-        <IconButton aria-label='settings'>
+        <IconButton>
           <MoreVertIcon />
         </IconButton>
       </Stack>

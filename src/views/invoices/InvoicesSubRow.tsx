@@ -29,7 +29,7 @@ export function InvoicesSubRow({ data }: { data: InvoiceData }) {
             borderBottom: 'unset',
             border: 'none',
             background: grey[50],
-            color: grey[500]
+            color: grey[500],
           },
         }}
       >
@@ -68,20 +68,20 @@ export function InvoicesSubRow({ data }: { data: InvoiceData }) {
 
           <TableCell>
             <Stack direction={'row'} justifyContent={'end'}>
-              <IconButton color='error' aria-label='settings'>
+              <IconButton color='error'>
                 <PauseCircleIcon />
               </IconButton>
-              <IconButton color='warning' aria-label='settings'>
+              <IconButton color='warning'>
                 <WarningIcon />
               </IconButton>
             </Stack>
           </TableCell>
           <TableCell>
             <Stack direction={'row'} justifyContent={'space-between'}>
-              <IconButton color='primary' aria-label='settings'>
+              <IconButton color='primary'>
                 <TextsmsIcon />
               </IconButton>
-              <IconButton aria-label='settings'>
+              <IconButton>
                 <MoreVertIcon />
               </IconButton>
             </Stack>

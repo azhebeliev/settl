@@ -14,6 +14,9 @@ export function InvoicesTableSection() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [status, setStatus] = useState<InvoicesStatus>('active');
   const [globalFilter, setGlobalFilter] = useState<string>('');
+
+  const handleEdit = (cellData: any) =>
+    console.log('just how to add some functions test', cellData);
   return (
     <>
       <InvoicesTableControlSection
@@ -28,6 +31,9 @@ export function InvoicesTableSection() {
         globalFilter={globalFilter}
         data={data}
         columns={invoicesColumns}
+        objectsContainer={{
+          handleEdit,
+        }}
         enableSorting
         enablePagination
       />

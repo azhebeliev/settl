@@ -1,31 +1,39 @@
 import NorthIcon from '@mui/icons-material/North';
 import SouthIcon from '@mui/icons-material/South';
 import {
-    Box,
-    Divider,
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
+  Box,
+  Divider,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from '@mui/material';
-import { blue, grey, lightBlue } from '@mui/material/colors';
+import { blue, grey } from '@mui/material/colors';
 import {
-    ColumnDef,
-    ExpandedState,
-    flexRender,
-    getCoreRowModel,
-    getExpandedRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    SortingState,
-    useReactTable
+  ColumnDef,
+  ExpandedState,
+  flexRender,
+  getCoreRowModel,
+  getExpandedRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  RowData,
+  SortingState,
+  useReactTable,
 } from '@tanstack/react-table';
 import React, { useMemo, useState } from 'react';
 import { TablePagination } from './TablePagination';
+
+declare module '@tanstack/react-table' {
+  interface TableMeta<TData extends RowData> {
+    //ability to add handleFunc,someConst 
+    objectsContainer?: Record<string, any>;
+  }
+}
 
 export function ReactTable<T>({
   columns,
@@ -67,6 +75,7 @@ export function ReactTable<T>({
     getFilteredRowModel: getFilteredRowModel(),
     enableSorting: enableSorting ? true : false,
     initialState: { pagination: { pageSize: defaultPagSize, pageIndex: 0 } },
+    meta: { objectsContainer },
   });
 
   return (
@@ -117,13 +126,10 @@ export function ReactTable<T>({
             {table.getRowModel().rows.map((row) => {
               return (
                 <React.Fragment key={row.id}>
-                  <TableRow sx={{'&:hover':{backgroundColor:blue[50]}}}>
+                  <TableRow sx={{ '&:hover': { backgroundColor: blue[50] } }}>
                     {row.getVisibleCells().map((cell) => {
                       return (
-                        <TableCell
-                          sx={{ color: grey[700] }}
-                          key={cell.id}
-                        >
+                        <TableCell sx={{ color: grey[700] }} key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
