@@ -44,7 +44,8 @@ export function NavBar({
             fontWeight={600}
             pr={3}
             variant='h5'
-            component='div'
+            component='a'
+            href="/"
             sx={{ flexGrow: 1 }}
           >
             settle.
@@ -115,6 +116,7 @@ function CustomLink({ to, text }: { to: string; text: string }) {
   return (
     <Button
       sx={{
+        mx:'20px',
         textTransform: 'none',
         backgroundColor: pathname === to ? lightBlue[50] : 'inherit',
       }}
